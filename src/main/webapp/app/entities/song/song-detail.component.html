@@ -6,7 +6,19 @@
     <dl class="row-md jh-entity-details">
         <dt><span>Deezer Ref</span></dt>
         <dd>
-            <span>{{song.deezerRef}}</span>
+            <!-- <span>{{song.deezerRef}}</span> -->
+            <iframe [src]="sanitizedUrl" 
+            scrolling="no" 
+            frameborder="0" 
+            allowTransparency="true"  
+            width="80" 
+            height="80"></iframe>
+            <!-- <iframe [src]="{{song.safeUrl}}" 
+            scrolling="no" 
+            frameborder="0" 
+            allowTransparency="true"  
+            width="80" 
+            height="80"></iframe> -->
         </dd>
         <dt><span>Date</span></dt>
         <dd>
