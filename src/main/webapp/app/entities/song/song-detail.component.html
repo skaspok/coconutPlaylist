@@ -1,4 +1,3 @@
-
 <div *ngIf="song">
     <h2><span>Song</span> {{song.id}}</h2>
     <hr>
@@ -6,19 +5,8 @@
     <dl class="row-md jh-entity-details">
         <dt><span>Deezer Ref</span></dt>
         <dd>
-            <!-- <span>{{song.deezerRef}}</span> -->
-            <iframe [src]="sanitizedUrl" 
-            scrolling="no" 
-            frameborder="0" 
-            allowTransparency="true"  
-            width="80" 
-            height="80"></iframe>
-            <!-- <iframe [src]="{{song.safeUrl}}" 
-            scrolling="no" 
-            frameborder="0" 
-            allowTransparency="true"  
-            width="80" 
-            height="80"></iframe> -->
+            <iframe [src]="song.sanitizedUrl" scrolling="no" frameborder="0" allowTransparency="true" width="80" height="80"></iframe>
+            {{song.deezerRef}}
         </dd>
         <dt><span>Date</span></dt>
         <dd>
@@ -32,16 +20,11 @@
         </dd>
     </dl>
 
-    <button type="submit"
-            (click)="previousState()"
-            class="btn btn-info">
+    <button type="submit" (click)="previousState()" class="btn btn-info">
         <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
     </button>
 
-    <button type="button"
-            [routerLink]="['/', { outlets: { popup: 'song/'+ song.id + '/edit'} }]"
-            replaceUrl="true"
-            class="btn btn-primary">
+    <button type="button" [routerLink]="['/', { outlets: { popup: 'song/'+ song.id + '/edit'} }]" replaceUrl="true" class="btn btn-primary">
         <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
     </button>
 </div>

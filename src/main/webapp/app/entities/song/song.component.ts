@@ -7,13 +7,18 @@ import { Song } from './song.model';
 import { SongService } from './song.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
     selector: 'jhi-song',
     templateUrl: './song.component.html'
 })
 export class SongComponent implements OnInit, OnDestroy {
-songs: Song[];
+
+    static DEEZER_LINK: string = 'http://www.deezer.com/plugins/player?format=square&autoplay=false&playlist=false&width=80&'
+    + 'height=80&color=007FEB&layout=dark&size=small&type=tracks&id=[song.deezerRef]&app_id=1';
+
+    songs: Song[];
     currentAccount: any;
     eventSubscriber: Subscription;
 
@@ -21,14 +26,20 @@ songs: Song[];
         private songService: SongService,
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager,
-        private principal: Principal
+        private principal: Principal,
+        private sanitizer: DomSanitizer
     ) {
+        console.log('SongComponent constructor');
     }
 
     loadAll() {
         this.songService.query().subscribe(
             (res: ResponseWrapper) => {
                 this.songs = res.json;
+
+                for (let i = 0; i < this.songs.length; i++) {
+                    this.sanitizeSong(this.songs[i]);
+                }
             },
             (res: ResponseWrapper) => this.onError(res.json)
         );
@@ -39,6 +50,7 @@ songs: Song[];
             this.currentAccount = account;
         });
         this.registerChangeInSongs();
+
     }
 
     ngOnDestroy() {
@@ -54,5 +66,12 @@ songs: Song[];
 
     private onError(error) {
         this.alertService.error(error.message, null, null);
+    }
+
+    private sanitizeSong(song: Song) {
+
+        const url = SongComponent.DEEZER_LINK.replace('[song.deezerRef]', song.deezerRef);
+        console.log('Sanitize ' + url);
+        song.sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
     }
 }

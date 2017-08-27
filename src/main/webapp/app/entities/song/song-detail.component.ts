@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
-import { JhiEventManager  } from 'ng-jhipster';
+import { JhiEventManager } from 'ng-jhipster';
 
 import { Song } from './song.model';
 import { SongService } from './song.service';
-import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
 
 @Component({
     selector: 'jhi-song-detail',
@@ -13,20 +12,14 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser
 })
 export class SongDetailComponent implements OnInit, OnDestroy {
 
-    static DEEZER_LINK: string = 'http://www.deezer.com/plugins/player?format=square&autoplay=false&playlist=false&width=80&'
-    + 'height=80&color=007FEB&layout=dark&size=small&type=tracks&id=[song.deezerRef]&app_id=1';
-
     song: Song;
     private subscription: Subscription;
     private eventSubscriber: Subscription;
-    public sanitizedUrl: SafeResourceUrl;
 
     constructor(
         private eventManager: JhiEventManager,
         private songService: SongService,
         private route: ActivatedRoute,
-        private domSanitizer: DomSanitizer,
-
     ) {
     }
 
@@ -40,11 +33,8 @@ export class SongDetailComponent implements OnInit, OnDestroy {
     load(id) {
         this.songService.find(id).subscribe((song) => {
             this.song = song;
-
-            let url = SongDetailComponent.DEEZER_LINK.replace('[song.deezerRef]', song.deezerRef);
-            this.sanitizedUrl =  this.domSanitizer.bypassSecurityTrustResourceUrl(url);
         });
-      
+
     }
     previousState() {
         window.history.back();
