@@ -29,7 +29,6 @@ export class SongComponent implements OnInit, OnDestroy {
         private principal: Principal,
         private sanitizer: DomSanitizer
     ) {
-        console.log('SongComponent constructor');
     }
 
     loadAll() {
@@ -69,9 +68,7 @@ export class SongComponent implements OnInit, OnDestroy {
     }
 
     private sanitizeSong(song: Song) {
-
         const url = SongComponent.DEEZER_LINK.replace('[song.deezerRef]', song.deezerRef);
-        console.log('Sanitize ' + url);
         song.sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
     }
 }
