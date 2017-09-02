@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
-import { JhiEventManager } from 'ng-jhipster';
+import { JhiEventManager  } from 'ng-jhipster';
 
 import { Song } from './song.model';
 import { SongService } from './song.service';
@@ -19,7 +19,7 @@ export class SongDetailComponent implements OnInit, OnDestroy {
     constructor(
         private eventManager: JhiEventManager,
         private songService: SongService,
-        private route: ActivatedRoute,
+        private route: ActivatedRoute
     ) {
     }
 
@@ -34,7 +34,6 @@ export class SongDetailComponent implements OnInit, OnDestroy {
         this.songService.find(id).subscribe((song) => {
             this.song = song;
         });
-
     }
     previousState() {
         window.history.back();

@@ -32,7 +32,6 @@ export class SongService {
     }
 
     find(id: number): Observable<Song> {
-        console.log('Service find ' + id);
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
             const jsonResponse = res.json();
             this.convertItemFromServer(jsonResponse);
@@ -42,16 +41,8 @@ export class SongService {
 
     query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
-        console.log('Service  query');
-        let songs = this.http.get(this.resourceUrl, options)
+        return this.http.get(this.resourceUrl, options)
             .map((res: Response) => this.convertResponse(res));
-
-        console.log(songs);
-        // for (let song in songs as Observable<Song>) {
-        //     const url = Song.DEEZER_LINK.replace('[song.deezerRef]', song.deezerRef);
-        //     this.sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-        // }
-        return songs;
     }
 
     delete(id: number): Observable<Response> {

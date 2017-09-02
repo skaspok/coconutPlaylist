@@ -7,7 +7,7 @@ import { CoconutPlaylistCommentModule } from './comment/comment.module';
 @NgModule({
     imports: [
         CoconutPlaylistSongModule,
-        CoconutPlaylistCommentModule,
+        CoconutPlaylistCommentModule
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],
@@ -15,4 +15,4 @@ import { CoconutPlaylistCommentModule } from './comment/comment.module';
     providers: [],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class CoconutPlaylistEntityModule {}
+export class CoconutPlaylistEntityModule { }

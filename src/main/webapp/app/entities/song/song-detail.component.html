@@ -6,7 +6,6 @@
         <dt><span>Deezer Ref</span></dt>
         <dd>
             <iframe [src]="song.getSanitizedUrl" scrolling="no" frameborder="0" allowTransparency="true" width="80" height="80"></iframe>
-            {{song.getSanitizedUrl2}}
         </dd>
         <dt><span>Date</span></dt>
         <dd>
@@ -17,6 +16,10 @@
             <div *ngIf="song.comment">
                 <a [routerLink]="['/comment', song.comment?.id]">{{song.comment?.id}}</a>
             </div>
+        </dd>
+        <dt><span>Adding User</span></dt>
+        <dd>
+            {{song.addingUser?.login}}
         </dd>
     </dl>
 

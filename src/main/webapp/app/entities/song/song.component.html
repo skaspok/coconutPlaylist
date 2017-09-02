@@ -20,6 +20,7 @@
                     <th><span>Deezer Ref</span></th>
                     <th><span>Date</span></th>
                     <th><span>Comment</span></th>
+                    <th><span>Adding User</span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -27,13 +28,17 @@
                 <tr *ngFor="let song of songs ;trackBy: trackId">
                     <td><a [routerLink]="['../song', song.id ]">{{song.id}}</a></td>
                     <td>
-                        <iframe [src]="song.sanitizedUrl" scrolling="no" frameborder="0" allowTransparency="true" width="80" height="80"></iframe>
+                        <iframe [src]="song.sanitizedUrl" scrolling="no" frameborder="0" allowTransparency="true" width="80"
+                            height="80"></iframe>
                     </td>
                     <td>{{song.date | date:'medium'}}</td>
                     <td>
                         <div *ngIf="song.comment">
                             <a [routerLink]="['../comment', song.comment?.id ]">{{song.comment?.id}}</a>
                         </div>
+                    </td>
+                    <td>
+                        {{song.addingUser?.login}}
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

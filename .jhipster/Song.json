@@ -6,6 +6,14 @@
             "otherEntityName": "comment",
             "relationshipType": "many-to-one",
             "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "addingUser",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "song"
         }
     ],
     "fields": [
@@ -19,8 +27,8 @@
         }
     ],
     "changelogDate": "20170812135341",
-    "entityTableName": "song",
     "dto": "no",
-    "pagination": "no",
-    "service": "no"
+    "service": "no",
+    "entityTableName": "song",
+    "pagination": "no"
 }

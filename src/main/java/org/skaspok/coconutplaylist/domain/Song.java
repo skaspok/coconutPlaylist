@@ -31,6 +31,9 @@ public class Song implements Serializable {
     @ManyToOne
     private Comment comment;
 
+    @ManyToOne
+    private User addingUser;
+
     public Long getId() {
         return id;
     }
@@ -76,6 +79,19 @@ public class Song implements Serializable {
 
     public void setComment(Comment comment) {
         this.comment = comment;
+    }
+
+    public User getAddingUser() {
+        return addingUser;
+    }
+
+    public Song addingUser(User user) {
+        this.addingUser = user;
+        return this;
+    }
+
+    public void setAddingUser(User user) {
+        this.addingUser = user;
     }
 
     @Override

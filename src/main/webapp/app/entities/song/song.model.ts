@@ -1,4 +1,5 @@
-import { BaseEntity } from './../../shared';
+import { BaseEntity, User } from './../../shared';
+
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 export class Song implements BaseEntity {
@@ -14,8 +15,8 @@ export class Song implements BaseEntity {
         public deezerRef?: string,
         public date?: any,
         public comment?: BaseEntity,
+        public addingUser?: User,
     ) {
-        console.log('MOdel constructor');
     }
 
     public getSanitizedUrl2() {
@@ -24,7 +25,6 @@ export class Song implements BaseEntity {
             const url = Song.DEEZER_LINK.replace('[song.deezerRef]', this.deezerRef);
             this.sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         }
-        return this.sanitizedUrl;
 
     }
 }

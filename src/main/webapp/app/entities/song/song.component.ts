@@ -14,7 +14,6 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
     templateUrl: './song.component.html'
 })
 export class SongComponent implements OnInit, OnDestroy {
-
     static DEEZER_LINK: string = 'http://www.deezer.com/plugins/player?format=square&autoplay=false&playlist=false&width=80&'
     + 'height=80&color=007FEB&layout=dark&size=small&type=tracks&id=[song.deezerRef]&app_id=1';
 
@@ -35,7 +34,6 @@ export class SongComponent implements OnInit, OnDestroy {
         this.songService.query().subscribe(
             (res: ResponseWrapper) => {
                 this.songs = res.json;
-
                 for (let i = 0; i < this.songs.length; i++) {
                     this.sanitizeSong(this.songs[i]);
                 }
@@ -49,7 +47,6 @@ export class SongComponent implements OnInit, OnDestroy {
             this.currentAccount = account;
         });
         this.registerChangeInSongs();
-
     }
 
     ngOnDestroy() {
@@ -66,7 +63,6 @@ export class SongComponent implements OnInit, OnDestroy {
     private onError(error) {
         this.alertService.error(error.message, null, null);
     }
-
     private sanitizeSong(song: Song) {
         const url = SongComponent.DEEZER_LINK.replace('[song.deezerRef]', song.deezerRef);
         song.sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
