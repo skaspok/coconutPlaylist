@@ -2,17 +2,17 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipName": "comment",
-            "otherEntityName": "comment",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
-        },
-        {
             "relationshipName": "addingUser",
             "otherEntityName": "user",
             "relationshipType": "many-to-one",
             "otherEntityField": "login",
             "ownerSide": true,
+            "otherEntityRelationshipName": "song"
+        },
+        {
+            "relationshipName": "comments",
+            "otherEntityName": "comment",
+            "relationshipType": "one-to-many",
             "otherEntityRelationshipName": "song"
         }
     ],

@@ -9,6 +9,8 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { Comment } from './comment.model';
 import { CommentPopupService } from './comment-popup.service';
 import { CommentService } from './comment.service';
+import { Song, SongService } from '../song';
+import { ResponseWrapper } from '../../shared';
 
 @Component({
     selector: 'jhi-comment-dialog',
@@ -19,16 +21,21 @@ export class CommentDialogComponent implements OnInit {
     comment: Comment;
     isSaving: boolean;
 
+    songs: Song[];
+
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
         private commentService: CommentService,
+        private songService: SongService,
         private eventManager: JhiEventManager
     ) {
     }
 
     ngOnInit() {
         this.isSaving = false;
+        this.songService.query()
+            .subscribe((res: ResponseWrapper) => { this.songs = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     clear() {
@@ -69,6 +76,10 @@ export class CommentDialogComponent implements OnInit {
 
     private onError(error) {
         this.alertService.error(error.message, null, null);
+    }
+
+    trackSongById(index: number, item: Song) {
+        return item.id;
     }
 }
 

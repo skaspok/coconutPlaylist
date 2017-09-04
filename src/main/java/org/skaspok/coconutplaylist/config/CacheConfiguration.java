@@ -46,6 +46,7 @@ public class CacheConfiguration {
             cm.createCache(org.skaspok.coconutplaylist.domain.Song.class.getName(), jcacheConfiguration);
             cm.createCache(org.skaspok.coconutplaylist.domain.Comment.class.getName(), jcacheConfiguration);
             cm.createCache(org.skaspok.coconutplaylist.domain.Comment.class.getName() + ".songs", jcacheConfiguration);
+            cm.createCache(org.skaspok.coconutplaylist.domain.Song.class.getName() + ".comments", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

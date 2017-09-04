@@ -4,15 +4,15 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
     <!--
-        Added the constraints for entity Song.
+        Added the constraints for entity Comment.
     -->
-    <changeSet id="20170812135341-2" author="jhipster">
+    <changeSet id="20170812135342-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="adding_user_id"
-                                 baseTableName="song"
-                                 constraintName="fk_song_adding_user_id"
+        <addForeignKeyConstraint baseColumnNames="song_id"
+                                 baseTableName="comment"
+                                 constraintName="fk_comment_song_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
+                                 referencedTableName="song"/>
 
     </changeSet>
 </databaseChangeLog>

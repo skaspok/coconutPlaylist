@@ -8,8 +8,8 @@ export class SongUtil {
 
     private static sanitizer: DomSanitizer;
 
-    private static sanitizeSong(song: Song) {
+    public static sanitizeSong(song: Song) {
         const url = SongUtil.DEEZER_LINK.replace('[song.deezerRef]', song.deezerRef);
-        //song.sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        return this.sanitizer.bypassSecurityTrustResourceUrl(url);
     }
-} 
+}

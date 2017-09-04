@@ -1,11 +1,14 @@
 package org.skaspok.coconutplaylist.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -29,10 +32,12 @@ public class Song implements Serializable {
     private ZonedDateTime date;
 
     @ManyToOne
-    private Comment comment;
-
-    @ManyToOne
     private User addingUser;
+
+    @OneToMany(mappedBy = "song")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Comment> comments = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -68,19 +73,6 @@ public class Song implements Serializable {
         this.date = date;
     }
 
-    public Comment getComment() {
-        return comment;
-    }
-
-    public Song comment(Comment comment) {
-        this.comment = comment;
-        return this;
-    }
-
-    public void setComment(Comment comment) {
-        this.comment = comment;
-    }
-
     public User getAddingUser() {
         return addingUser;
     }
@@ -92,6 +84,31 @@ public class Song implements Serializable {
 
     public void setAddingUser(User user) {
         this.addingUser = user;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public Song comments(Set<Comment> comments) {
+        this.comments = comments;
+        return this;
+    }
+
+    public Song addComments(Comment comment) {
+        this.comments.add(comment);
+        comment.setSong(this);
+        return this;
+    }
+
+    public Song removeComments(Comment comment) {
+        this.comments.remove(comment);
+        comment.setSong(null);
+        return this;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 
     @Override

@@ -1,3 +1,4 @@
+
 <div *ngIf="song">
     <h2><span>Song</span> {{song.id}}</h2>
     <hr>
@@ -5,17 +6,11 @@
     <dl class="row-md jh-entity-details">
         <dt><span>Deezer Ref</span></dt>
         <dd>
-            <iframe [src]="song.getSanitizedUrl" scrolling="no" frameborder="0" allowTransparency="true" width="80" height="80"></iframe>
+            <span>{{song.deezerRef}}</span>
         </dd>
         <dt><span>Date</span></dt>
         <dd>
             <span>{{song.date | date:'medium'}}</span>
-        </dd>
-        <dt><span>Comment</span></dt>
-        <dd>
-            <div *ngIf="song.comment">
-                <a [routerLink]="['/comment', song.comment?.id]">{{song.comment?.id}}</a>
-            </div>
         </dd>
         <dt><span>Adding User</span></dt>
         <dd>
@@ -23,11 +18,16 @@
         </dd>
     </dl>
 
-    <button type="submit" (click)="previousState()" class="btn btn-info">
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
         <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
     </button>
 
-    <button type="button" [routerLink]="['/', { outlets: { popup: 'song/'+ song.id + '/edit'} }]" replaceUrl="true" class="btn btn-primary">
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'song/'+ song.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
         <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
     </button>
 </div>

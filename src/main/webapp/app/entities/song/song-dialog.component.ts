@@ -9,7 +9,6 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { Song } from './song.model';
 import { SongPopupService } from './song-popup.service';
 import { SongService } from './song.service';
-import { Comment, CommentService } from '../comment';
 import { User, UserService } from '../../shared';
 import { ResponseWrapper } from '../../shared';
 
@@ -22,15 +21,12 @@ export class SongDialogComponent implements OnInit {
     song: Song;
     isSaving: boolean;
 
-    comments: Comment[];
-
     users: User[];
 
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
         private songService: SongService,
-        private commentService: CommentService,
         private userService: UserService,
         private eventManager: JhiEventManager
     ) {
@@ -38,8 +34,6 @@ export class SongDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
-        this.commentService.query()
-            .subscribe((res: ResponseWrapper) => { this.comments = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.userService.query()
             .subscribe((res: ResponseWrapper) => { this.users = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
@@ -82,10 +76,6 @@ export class SongDialogComponent implements OnInit {
 
     private onError(error) {
         this.alertService.error(error.message, null, null);
-    }
-
-    trackCommentById(index: number, item: Comment) {
-        return item.id;
     }
 
     trackUserById(index: number, item: User) {

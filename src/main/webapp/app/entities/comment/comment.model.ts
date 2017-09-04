@@ -5,7 +5,7 @@ export class Comment implements BaseEntity {
         public id?: number,
         public text?: string,
         public date?: any,
-        public songs?: BaseEntity[],
+        public song?: BaseEntity,
     ) {
     }
 }

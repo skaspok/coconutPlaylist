@@ -19,6 +19,7 @@
             <th><span>ID</span></th>
             <th><span>Text</span></th>
             <th><span>Date</span></th>
+            <th><span>Song</span></th>
             <th></th>
             </tr>
             </thead>
@@ -27,6 +28,11 @@
                 <td><a [routerLink]="['../comment', comment.id ]">{{comment.id}}</a></td>
                 <td>{{comment.text}}</td>
                 <td>{{comment.date | date:'medium'}}</td>
+                <td>
+                    <div *ngIf="comment.song">
+                        <a [routerLink]="['../song', comment.song?.id ]" >{{comment.song?.deezerRef}}</a>
+                    </div>
+                </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

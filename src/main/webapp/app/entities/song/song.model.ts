@@ -11,8 +11,9 @@ export class Song implements BaseEntity {
         public id?: number,
         public deezerRef?: string,
         public date?: any,
-        public comment?: BaseEntity,
+        public comments?: BaseEntity[],
         public addingUser?: User,
+
     ) {
     }
 

@@ -1,14 +1,11 @@
 package org.skaspok.coconutplaylist.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -31,10 +28,8 @@ public class Comment implements Serializable {
     @Column(name = "jhi_date")
     private ZonedDateTime date;
 
-    @OneToMany(mappedBy = "comment")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Song> songs = new HashSet<>();
+    @ManyToOne
+    private Song song;
 
     public Long getId() {
         return id;
@@ -70,29 +65,17 @@ public class Comment implements Serializable {
         this.date = date;
     }
 
-    public Set<Song> getSongs() {
-        return songs;
+    public Song getSong() {
+        return song;
     }
 
-    public Comment songs(Set<Song> songs) {
-        this.songs = songs;
+    public Comment song(Song song) {
+        this.song = song;
         return this;
     }
 
-    public Comment addSong(Song song) {
-        this.songs.add(song);
-        song.setComment(this);
-        return this;
-    }
-
-    public Comment removeSong(Song song) {
-        this.songs.remove(song);
-        song.setComment(null);
-        return this;
-    }
-
-    public void setSongs(Set<Song> songs) {
-        this.songs = songs;
+    public void setSong(Song song) {
+        this.song = song;
     }
 
     @Override

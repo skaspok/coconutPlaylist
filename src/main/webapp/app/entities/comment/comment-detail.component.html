@@ -12,6 +12,12 @@
         <dd>
             <span>{{comment.date | date:'medium'}}</span>
         </dd>
+        <dt><span>Song</span></dt>
+        <dd>
+            <div *ngIf="comment.song">
+                <a [routerLink]="['/song', comment.song?.id]">{{comment.song?.deezerRef}}</a>
+            </div>
+        </dd>
     </dl>
 
     <button type="submit"

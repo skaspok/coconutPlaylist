@@ -2,10 +2,10 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "one-to-many",
             "relationshipName": "song",
             "otherEntityName": "song",
-            "otherEntityRelationshipName": "comment"
+            "relationshipType": "many-to-one",
+            "otherEntityField": "deezerRef"
         }
     ],
     "fields": [
@@ -19,8 +19,8 @@
         }
     ],
     "changelogDate": "20170812135342",
-    "entityTableName": "comment",
     "dto": "no",
-    "pagination": "no",
-    "service": "no"
+    "service": "no",
+    "entityTableName": "comment",
+    "pagination": "no"
 }

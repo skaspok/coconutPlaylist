@@ -26,13 +26,6 @@
         </div>
 
         <div class="form-group">
-            <label for="field_comment">Comment</label>
-            <select class="form-control" id="field_comment" name="comment" [(ngModel)]="song.comment" >
-                <option [ngValue]="null"></option>
-                <option [ngValue]="commentOption.id === song.comment?.id ? song.comment : commentOption" *ngFor="let commentOption of comments; trackBy: trackCommentById">{{commentOption.id}}</option>
-            </select>
-        </div>
-        <div class="form-group">
             <label for="field_addingUser">Adding User</label>
             <select class="form-control" id="field_addingUser" name="addingUser" [(ngModel)]="song.addingUser" >
                 <option [ngValue]="null"></option>
