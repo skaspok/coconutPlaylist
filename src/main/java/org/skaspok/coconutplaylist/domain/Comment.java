@@ -3,6 +3,8 @@ package org.skaspok.coconutplaylist.domain;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -29,6 +31,7 @@ public class Comment implements Serializable {
     private ZonedDateTime date;
 
     @ManyToOne
+    @JsonIgnore
     private Song song;
 
     public Long getId() {
@@ -100,10 +103,6 @@ public class Comment implements Serializable {
 
     @Override
     public String toString() {
-        return "Comment{" +
-            "id=" + getId() +
-            ", text='" + getText() + "'" +
-            ", date='" + getDate() + "'" +
-            "}";
+        return "Comment{" + "id=" + getId() + ", text='" + getText() + "'" + ", date='" + getDate() + "'" + "}";
     }
 }

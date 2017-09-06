@@ -34,8 +34,7 @@ public class Song implements Serializable {
     @ManyToOne
     private User addingUser;
 
-    @OneToMany(mappedBy = "song")
-    @JsonIgnore
+    @OneToMany(mappedBy = "song", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Comment> comments = new HashSet<>();
 
@@ -133,10 +132,6 @@ public class Song implements Serializable {
 
     @Override
     public String toString() {
-        return "Song{" +
-            "id=" + getId() +
-            ", deezerRef='" + getDeezerRef() + "'" +
-            ", date='" + getDate() + "'" +
-            "}";
+        return "Song{" + "id=" + getId() + ", deezerRef='" + getDeezerRef() + "'" + ", date='" + getDate() + "'" + "}";
     }
 }
