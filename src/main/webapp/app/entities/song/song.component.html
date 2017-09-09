@@ -32,10 +32,15 @@
                     <td>
                         {{song.addingUser?.login}}
                     </td>
-                    <td>bim
-                        <li *ngFor="let comment of song.comments">
-                            {{comment.text}}
-                        </li>
+                    <td>
+                        <jhi-song-comments [song]="song"></jhi-song-comments>
+                        <div class="btn-group flex-btn-group-container">
+                            <input id="field_new_comment" type="text" class="form-control" name="comment" />
+                            <button type="submit" (click)="onAddComment()" class="btn btn-info btn-sm">
+                                <span class="fa fa-plus"></span>
+                                <span class="hidden-md-down">Add</span>
+                            </button>
+                        </div>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

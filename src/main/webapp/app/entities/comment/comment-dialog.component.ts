@@ -10,6 +10,7 @@ import { Comment } from './comment.model';
 import { CommentPopupService } from './comment-popup.service';
 import { CommentService } from './comment.service';
 import { Song, SongService } from '../song';
+import { User, UserService } from '../../shared';
 import { ResponseWrapper } from '../../shared';
 
 @Component({
@@ -23,11 +24,14 @@ export class CommentDialogComponent implements OnInit {
 
     songs: Song[];
 
+    users: User[];
+
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
         private commentService: CommentService,
         private songService: SongService,
+        private userService: UserService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -36,6 +40,8 @@ export class CommentDialogComponent implements OnInit {
         this.isSaving = false;
         this.songService.query()
             .subscribe((res: ResponseWrapper) => { this.songs = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.userService.query()
+            .subscribe((res: ResponseWrapper) => { this.users = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     clear() {
@@ -79,6 +85,10 @@ export class CommentDialogComponent implements OnInit {
     }
 
     trackSongById(index: number, item: Song) {
+        return item.id;
+    }
+
+    trackUserById(index: number, item: User) {
         return item.id;
     }
 }

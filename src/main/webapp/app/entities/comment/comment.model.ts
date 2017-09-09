@@ -1,4 +1,4 @@
-import { BaseEntity } from './../../shared';
+import { BaseEntity, User } from './../../shared';
 
 export class Comment implements BaseEntity {
     constructor(
@@ -6,6 +6,7 @@ export class Comment implements BaseEntity {
         public text?: string,
         public date?: any,
         public song?: BaseEntity,
+        public user?: User,
     ) {
     }
 }

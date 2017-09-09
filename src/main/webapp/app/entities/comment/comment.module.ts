@@ -2,6 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { CoconutPlaylistSharedModule } from '../../shared';
+import { CoconutPlaylistAdminModule } from '../../admin/admin.module';
 import {
     CommentService,
     CommentPopupService,
@@ -23,6 +24,7 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         CoconutPlaylistSharedModule,
+        CoconutPlaylistAdminModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [

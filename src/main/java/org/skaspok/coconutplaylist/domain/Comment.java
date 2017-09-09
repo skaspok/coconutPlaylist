@@ -2,9 +2,7 @@ package org.skaspok.coconutplaylist.domain;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -33,6 +31,9 @@ public class Comment implements Serializable {
     @ManyToOne
     @JsonIgnore
     private Song song;
+
+    @ManyToOne
+    private User user;
 
     public Long getId() {
         return id;
@@ -79,6 +80,19 @@ public class Comment implements Serializable {
 
     public void setSong(Song song) {
         this.song = song;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Comment user(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

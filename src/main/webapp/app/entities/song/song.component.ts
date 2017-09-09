@@ -41,6 +41,11 @@ export class SongComponent implements OnInit, OnDestroy {
             (res: ResponseWrapper) => this.onError(res.json)
         );
     }
+
+    onAddComment() {
+        console.log('add comment');
+    }
+
     ngOnInit() {
         this.loadAll();
         this.principal.identity().then((account) => {

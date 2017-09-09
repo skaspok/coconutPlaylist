@@ -18,6 +18,10 @@
                 <a [routerLink]="['/song', comment.song?.id]">{{comment.song?.deezerRef}}</a>
             </div>
         </dd>
+        <dt><span>User</span></dt>
+        <dd>
+            {{comment.user?.login}}
+        </dd>
     </dl>
 
     <button type="submit"

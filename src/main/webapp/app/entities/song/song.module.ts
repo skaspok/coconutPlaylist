@@ -7,6 +7,7 @@ import {
     SongService,
     SongPopupService,
     SongComponent,
+    SongCommentsComponent,
     SongDetailComponent,
     SongDialogComponent,
     SongPopupComponent,
@@ -29,6 +30,7 @@ const ENTITY_STATES = [
     ],
     declarations: [
         SongComponent,
+        SongCommentsComponent,
         SongDetailComponent,
         SongDialogComponent,
         SongDeleteDialogComponent,
@@ -37,6 +39,7 @@ const ENTITY_STATES = [
     ],
     entryComponents: [
         SongComponent,
+        SongCommentsComponent,
         SongDialogComponent,
         SongPopupComponent,
         SongDeleteDialogComponent,
@@ -48,4 +51,4 @@ const ENTITY_STATES = [
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class CoconutPlaylistSongModule {}
+export class CoconutPlaylistSongModule { }
