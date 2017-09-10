@@ -26,7 +26,13 @@
             </thead>
             <tbody>
                 <tr *ngFor="let comment of comments ;trackBy: trackId"></tr>
-                <td><a [routerLink]="['../comment', comment.id ]">{{comment.id}}</a></td>
+                <td></td>
+                <td>{{comment}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <!-- <td><a [routerLink]="['../comment', comment.id ]">{{comment.id}}</a></td>
                 <td>{{comment.text}}</td>
                 <td>{{comment.date | date:'medium'}}</td>
                 <td>
@@ -52,7 +58,7 @@
                             <span class="hidden-md-down">Delete</span>
                         </button>
                     </div>
-                </td>
+                </td> -->
                 </tr>
             </tbody>
         </table>

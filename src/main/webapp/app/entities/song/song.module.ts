@@ -8,6 +8,7 @@ import {
     SongPopupService,
     SongComponent,
     SongCommentsComponent,
+    CommentAddComponent,
     SongDetailComponent,
     SongDialogComponent,
     SongPopupComponent,
@@ -31,6 +32,7 @@ const ENTITY_STATES = [
     declarations: [
         SongComponent,
         SongCommentsComponent,
+        CommentAddComponent,
         SongDetailComponent,
         SongDialogComponent,
         SongDeleteDialogComponent,
@@ -40,6 +42,7 @@ const ENTITY_STATES = [
     entryComponents: [
         SongComponent,
         SongCommentsComponent,
+        CommentAddComponent,
         SongDialogComponent,
         SongPopupComponent,
         SongDeleteDialogComponent,

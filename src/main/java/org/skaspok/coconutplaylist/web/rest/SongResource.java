@@ -85,7 +85,8 @@ public class SongResource {
     @Timed
     public List<Song> getAllSongs() {
         log.debug("REST request to get all Songs");
-        return songRepository.findAll();
+        List<Song> listSong = songRepository.findAll(); 
+        return listSong;
     }
 
     /**

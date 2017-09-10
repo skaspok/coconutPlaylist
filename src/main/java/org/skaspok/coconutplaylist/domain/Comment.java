@@ -2,6 +2,8 @@ package org.skaspok.coconutplaylist.domain;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.io.Serializable;
@@ -29,7 +31,8 @@ public class Comment implements Serializable {
     private ZonedDateTime date;
 
     @ManyToOne
-    @JsonIgnore
+    //@JsonIgnore
+    @JsonBackReference
     private Song song;
 
     @ManyToOne

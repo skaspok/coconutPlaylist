@@ -2,10 +2,13 @@ package org.skaspok.coconutplaylist.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import org.skaspok.coconutplaylist.domain.Comment;
+import org.skaspok.coconutplaylist.domain.User;
+import org.skaspok.coconutplaylist.service.UserService;
 
 import org.skaspok.coconutplaylist.repository.CommentRepository;
 import org.skaspok.coconutplaylist.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import org.skaspok.coconutplaylist.security.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -29,9 +32,11 @@ public class CommentResource {
     private static final String ENTITY_NAME = "comment";
 
     private final CommentRepository commentRepository;
+    private final UserService userService;
 
-    public CommentResource(CommentRepository commentRepository) {
+    public CommentResource(CommentRepository commentRepository,UserService userService) {
         this.commentRepository = commentRepository;
+        this.userService = userService;
     }
 
     /**
@@ -44,14 +49,20 @@ public class CommentResource {
     @PostMapping("/comments")
     @Timed
     public ResponseEntity<Comment> createComment(@RequestBody Comment comment) throws URISyntaxException {
-        log.debug("REST request to save Comment : {}", comment);
+
+        Optional<User> optUser = userService.getCurrentUser();
+        comment.setUser(optUser.get());
+
+        log.warn("REST request to save Comment : {}", comment);
+        log.warn("pour user", comment.getUser().getLogin());
         if (comment.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new comment cannot already have an ID")).body(null);
+            return ResponseEntity.badRequest().headers(
+                    HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new comment cannot already have an ID"))
+                    .body(null);
         }
         Comment result = commentRepository.save(comment);
         return ResponseEntity.created(new URI("/api/comments/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -71,9 +82,8 @@ public class CommentResource {
             return createComment(comment);
         }
         Comment result = commentRepository.save(comment);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, comment.getId().toString()))
-            .body(result);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, comment.getId().toString()))
+                .body(result);
     }
 
     /**

@@ -12,6 +12,9 @@ export class SongCommentsComponent {
 
     constructor(
     ) {
-        // console.log('CommentComponent constructor : ' + this.song.deezerRef);
+    }
+
+    onAddComment() {
+        console.log('add comment');
     }
 }

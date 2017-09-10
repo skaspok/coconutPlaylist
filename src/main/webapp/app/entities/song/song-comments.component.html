@@ -1,7 +1,8 @@
 <div *ngIf="song">
     <table>
         <tr *ngFor="let comment of song.comments">
-            poil
+            <li>{{comment.user.login}} : {{comment.text}}</li>
         </tr>
+        <jhi-add-comment [song]="song"></jhi-add-comment>
     </table>
 </div>

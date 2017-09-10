@@ -15,9 +15,14 @@ export class CommentService {
 
     create(comment: Comment): Observable<Comment> {
         const copy = this.convert(comment);
+        console.log('create Comment : ' + JSON.stringify(copy));
+        console.log('url : ' + this.resourceUrl);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
+            console.log('create Comment 2: ' + res);
             const jsonResponse = res.json();
+            console.log('create Comment 3: ' + jsonResponse);
             this.convertItemFromServer(jsonResponse);
+            console.log('response : ' + jsonResponse);
             return jsonResponse;
         });
     }
@@ -41,6 +46,7 @@ export class CommentService {
 
     query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
+        console.log(' comment query');
         return this.http.get(this.resourceUrl, options)
             .map((res: Response) => this.convertResponse(res));
     }

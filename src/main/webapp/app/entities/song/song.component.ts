@@ -34,16 +34,13 @@ export class SongComponent implements OnInit, OnDestroy {
         this.songService.query().subscribe(
             (res: ResponseWrapper) => {
                 this.songs = res.json;
+                // console.log('chargement : ' + JSON.stringify(this.songs))
                 for (let i = 0; i < this.songs.length; i++) {
                     this.sanitizeSong(this.songs[i]);
                 }
             },
             (res: ResponseWrapper) => this.onError(res.json)
         );
-    }
-
-    onAddComment() {
-        console.log('add comment');
     }
 
     ngOnInit() {
