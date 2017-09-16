@@ -1,24 +1,33 @@
 package org.skaspok.coconutplaylist.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import org.skaspok.coconutplaylist.domain.Comment;
-import org.skaspok.coconutplaylist.domain.User;
-import org.skaspok.coconutplaylist.service.UserService;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.time.ZonedDateTime;
+import java.util.List;
+import java.util.Optional;
 
+import org.skaspok.coconutplaylist.domain.Comment;
+import org.skaspok.coconutplaylist.domain.Song;
+import org.skaspok.coconutplaylist.domain.User;
 import org.skaspok.coconutplaylist.repository.CommentRepository;
+import org.skaspok.coconutplaylist.repository.SongRepository;
+import org.skaspok.coconutplaylist.service.UserService;
 import org.skaspok.coconutplaylist.web.rest.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
-import org.skaspok.coconutplaylist.security.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URI;
-import java.net.URISyntaxException;
+import com.codahale.metrics.annotation.Timed;
 
-import java.util.List;
-import java.util.Optional;
+import io.github.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing Comment.
@@ -33,10 +42,13 @@ public class CommentResource {
 
     private final CommentRepository commentRepository;
     private final UserService userService;
+    private final SongRepository songRepository;
 
-    public CommentResource(CommentRepository commentRepository,UserService userService) {
+    public CommentResource(CommentRepository commentRepository, UserService userService,
+            SongRepository songRepository) {
         this.commentRepository = commentRepository;
         this.userService = userService;
+        this.songRepository = songRepository;
     }
 
     /**
@@ -63,6 +75,36 @@ public class CommentResource {
         Comment result = commentRepository.save(comment);
         return ResponseEntity.created(new URI("/api/comments/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
+    }
+
+    /**
+     * 
+     * @return
+     */
+    @PutMapping("/addSongComment/{songId}")
+    @Timed
+    public ResponseEntity<Void> addSongComment(@RequestBody String commentText, @PathVariable Long songId)
+            throws Exception {
+        log.debug("REST request to add a comment to Song");
+
+        Song song = songRepository.findOne(songId);
+        if (song == null) {
+            throw new Exception("Unknown song Id");
+        }
+
+        Optional<User> optUser = userService.getCurrentUser();
+        Comment comment = new Comment();
+        comment.setUser(optUser.get());
+        comment.setText(commentText);
+        comment.setDate(ZonedDateTime.now());
+
+        comment.setSong(song);
+
+        Comment result = commentRepository.save(comment);
+        song.addComments(comment);
+
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+                .build();
     }
 
     /**
@@ -125,4 +167,5 @@ public class CommentResource {
         commentRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
 }

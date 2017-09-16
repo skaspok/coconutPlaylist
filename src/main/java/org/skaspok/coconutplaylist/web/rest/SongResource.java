@@ -1,21 +1,28 @@
 package org.skaspok.coconutplaylist.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import org.skaspok.coconutplaylist.domain.Song;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
 
+import org.skaspok.coconutplaylist.domain.Song;
 import org.skaspok.coconutplaylist.repository.SongRepository;
 import org.skaspok.coconutplaylist.web.rest.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URI;
-import java.net.URISyntaxException;
+import com.codahale.metrics.annotation.Timed;
 
-import java.util.List;
-import java.util.Optional;
+import io.github.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing Song.
@@ -46,12 +53,13 @@ public class SongResource {
     public ResponseEntity<Song> createSong(@RequestBody Song song) throws URISyntaxException {
         log.debug("REST request to save Song : {}", song);
         if (song.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new song cannot already have an ID")).body(null);
+            return ResponseEntity.badRequest().headers(
+                    HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new song cannot already have an ID"))
+                    .body(null);
         }
         Song result = songRepository.save(song);
         return ResponseEntity.created(new URI("/api/songs/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -71,9 +79,8 @@ public class SongResource {
             return createSong(song);
         }
         Song result = songRepository.save(song);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, song.getId().toString()))
-            .body(result);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, song.getId().toString()))
+                .body(result);
     }
 
     /**
@@ -85,7 +92,7 @@ public class SongResource {
     @Timed
     public List<Song> getAllSongs() {
         log.debug("REST request to get all Songs");
-        List<Song> listSong = songRepository.findAll(); 
+        List<Song> listSong = songRepository.findAll();
         return listSong;
     }
 
@@ -95,7 +102,7 @@ public class SongResource {
      * @param id the id of the song to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the song, or with status 404 (Not Found)
      */
-    @GetMapping("/songs/{id}")
+    @GetMapping("/UpdateSong/{id}")
     @Timed
     public ResponseEntity<Song> getSong(@PathVariable Long id) {
         log.debug("REST request to get Song : {}", id);
@@ -116,4 +123,5 @@ public class SongResource {
         songRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
 }
