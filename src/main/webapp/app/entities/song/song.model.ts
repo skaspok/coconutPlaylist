@@ -1,4 +1,5 @@
 import { BaseEntity, User } from './../../shared';
+import { Comment } from './../comment';
 
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 

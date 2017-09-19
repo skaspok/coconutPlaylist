@@ -12,21 +12,16 @@ export class CommentAddComponent {
 
     @Input()
     song: Song;
-    newComment: string;
+    song2: Comment;
+    newComment?: string;
 
     constructor(
-        private songService: SongService,
         private commentService: CommentService,
     ) {
     }
 
     onAddComment() {
         console.log('add comment : ' + this.newComment);
-        const comment = new Comment();
-        comment.text = this.newComment;
-        comment.song = this.song;
-
-        // this.song.comments.push(comment);
-        this.commentService.create(comment);
+        this.commentService.addComment(this.newComment, this.song.id);
     }
 }

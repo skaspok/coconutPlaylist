@@ -4,7 +4,8 @@ import { Observable } from 'rxjs/Rx';
 import { JhiDateUtils } from 'ng-jhipster';
 
 import { Comment } from './comment.model';
-import { ResponseWrapper, createRequestOption } from '../../shared';
+import { Song } from '../song/song.model';
+import { ResponseWrapper, createRequestOption, User } from '../../shared';
 
 @Injectable()
 export class CommentService {
@@ -13,16 +14,12 @@ export class CommentService {
 
     constructor(private http: Http, private dateUtils: JhiDateUtils) { }
 
+
     create(comment: Comment): Observable<Comment> {
         const copy = this.convert(comment);
-        console.log('create Comment : ' + JSON.stringify(copy));
-        console.log('url : ' + this.resourceUrl);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
-            console.log('create Comment 2: ' + res);
             const jsonResponse = res.json();
-            console.log('create Comment 3: ' + jsonResponse);
             this.convertItemFromServer(jsonResponse);
-            console.log('response : ' + jsonResponse);
             return jsonResponse;
         });
     }
@@ -55,6 +52,11 @@ export class CommentService {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }
 
+    addComment(commentText: string, songId: number) {
+        return this.http.post(`${this.resourceUrl}/add_song_comment/${songId}`, commentText).subscribe(() => {
+        }, () => { });
+    }
+
     private convertResponse(res: Response): ResponseWrapper {
         const jsonResponse = res.json();
         for (let i = 0; i < jsonResponse.length; i++) {
@@ -70,8 +72,8 @@ export class CommentService {
 
     private convert(comment: Comment): Comment {
         const copy: Comment = Object.assign({}, comment);
-
         copy.date = this.dateUtils.toDate(comment.date);
         return copy;
     }
+
 }

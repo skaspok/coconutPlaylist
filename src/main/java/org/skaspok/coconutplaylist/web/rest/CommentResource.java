@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,11 +63,10 @@ public class CommentResource {
     @Timed
     public ResponseEntity<Comment> createComment(@RequestBody Comment comment) throws URISyntaxException {
 
+        log.warn("REST request to save Comment : {}", comment);
         Optional<User> optUser = userService.getCurrentUser();
         comment.setUser(optUser.get());
 
-        log.warn("REST request to save Comment : {}", comment);
-        log.warn("pour user", comment.getUser().getLogin());
         if (comment.getId() != null) {
             return ResponseEntity.badRequest().headers(
                     HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new comment cannot already have an ID"))
@@ -81,15 +81,16 @@ public class CommentResource {
      * 
      * @return
      */
-    @PutMapping("/addSongComment/{songId}")
+    @PostMapping(path = "/comments/add_song_comment/{songId}", produces = MediaType.TEXT_PLAIN_VALUE)
     @Timed
-    public ResponseEntity<Void> addSongComment(@RequestBody String commentText, @PathVariable Long songId)
-            throws Exception {
-        log.debug("REST request to add a comment to Song");
+    public ResponseEntity addSongComment(@RequestBody String commentText, @PathVariable Long songId) throws Exception {
+        log.debug("REST request to add a comment to Song " + songId);
 
         Song song = songRepository.findOne(songId);
         if (song == null) {
-            throw new Exception("Unknown song Id");
+            return ResponseEntity.badRequest()
+                    .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "unknownId", "Unknown song id " + songId))
+                    .build();
         }
 
         Optional<User> optUser = userService.getCurrentUser();
