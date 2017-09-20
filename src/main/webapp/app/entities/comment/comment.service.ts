@@ -11,9 +11,7 @@ import { ResponseWrapper, createRequestOption, User } from '../../shared';
 export class CommentService {
 
     private resourceUrl = 'api/comments';
-
     constructor(private http: Http, private dateUtils: JhiDateUtils) { }
-
 
     create(comment: Comment): Observable<Comment> {
         const copy = this.convert(comment);

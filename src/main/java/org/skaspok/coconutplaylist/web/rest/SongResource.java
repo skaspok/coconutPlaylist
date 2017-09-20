@@ -4,6 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.time.ZonedDateTime;
 
 import org.skaspok.coconutplaylist.domain.Song;
 import org.skaspok.coconutplaylist.repository.SongRepository;
@@ -11,6 +12,8 @@ import org.skaspok.coconutplaylist.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.skaspok.coconutplaylist.domain.User;
+import org.skaspok.coconutplaylist.service.UserService;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,9 +39,11 @@ public class SongResource {
     private static final String ENTITY_NAME = "song";
 
     private final SongRepository songRepository;
+    private final UserService userService;
 
-    public SongResource(SongRepository songRepository) {
+    public SongResource(SongRepository songRepository, UserService userService) {
         this.songRepository = songRepository;
+        this.userService = userService;
     }
 
     /**
@@ -52,6 +57,11 @@ public class SongResource {
     @Timed
     public ResponseEntity<Song> createSong(@RequestBody Song song) throws URISyntaxException {
         log.debug("REST request to save Song : {}", song);
+
+        Optional<User> optUser = userService.getCurrentUser();
+        song.setDate(ZonedDateTime.now());
+        song.setAddingUser(optUser.get());
+
         if (song.getId() != null) {
             return ResponseEntity.badRequest().headers(
                     HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new song cannot already have an ID"))

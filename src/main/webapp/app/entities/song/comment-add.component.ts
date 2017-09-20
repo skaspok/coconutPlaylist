@@ -28,6 +28,6 @@ export class CommentAddComponent {
             if (wrapp.status === 200) {
                 this.song.comments.push(wrapp.json);
             }
-        });;
+        });
     }
 }
