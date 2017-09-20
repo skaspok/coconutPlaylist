@@ -15,13 +15,13 @@ import org.skaspok.coconutplaylist.service.UserService;
 import org.skaspok.coconutplaylist.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -81,7 +81,7 @@ public class CommentResource {
      * 
      * @return
      */
-    @PostMapping(path = "/comments/add_song_comment/{songId}", produces = MediaType.TEXT_PLAIN_VALUE)
+    @PostMapping("/comments/add_song_comment/{songId}")
     @Timed
     public ResponseEntity addSongComment(@RequestBody String commentText, @PathVariable Long songId) throws Exception {
         log.debug("REST request to add a comment to Song " + songId);
@@ -102,10 +102,11 @@ public class CommentResource {
         comment.setSong(song);
 
         Comment result = commentRepository.save(comment);
-        song.addComments(comment);
+        song.addComments(result);
 
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-                .build();
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, result.getId().toString()))
+                .body(result);
+
     }
 
     /**

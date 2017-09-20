@@ -52,9 +52,8 @@ export class CommentService {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }
 
-    addComment(commentText: string, songId: number) {
-        return this.http.post(`${this.resourceUrl}/add_song_comment/${songId}`, commentText).subscribe(() => {
-        }, () => { });
+    addComment(commentText: string, songId: number): Observable<Response> {
+        return this.http.post(`${this.resourceUrl}/add_song_comment/${songId}`, commentText);
     }
 
     private convertResponse(res: Response): ResponseWrapper {
