@@ -17,6 +17,7 @@ import {
     songRoute,
     songPopupRoute,
 } from './';
+import { DeezerService } from '../../shared/deezer.service';
 
 const ENTITY_STATES = [
     ...songRoute,
@@ -51,6 +52,7 @@ const ENTITY_STATES = [
     providers: [
         SongService,
         SongPopupService,
+        DeezerService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

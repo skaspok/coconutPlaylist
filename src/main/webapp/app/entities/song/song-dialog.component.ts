@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Response } from '@angular/http';
+import { Http, Response, URLSearchParams } from '@angular/http';
 
 import { Observable } from 'rxjs/Rx';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -11,6 +11,7 @@ import { SongPopupService } from './song-popup.service';
 import { SongService } from './song.service';
 import { User, UserService } from '../../shared';
 import { ResponseWrapper } from '../../shared';
+import { DeezerService } from '../../shared/deezer.service';
 
 @Component({
     selector: 'jhi-song-dialog',
@@ -20,6 +21,7 @@ export class SongDialogComponent implements OnInit {
 
     song: Song;
     isSaving: boolean;
+    search: string;
 
     users: User[];
 
@@ -28,7 +30,8 @@ export class SongDialogComponent implements OnInit {
         private alertService: JhiAlertService,
         private songService: SongService,
         private userService: UserService,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private deezerService: DeezerService
     ) {
     }
 
@@ -43,6 +46,7 @@ export class SongDialogComponent implements OnInit {
     }
 
     save() {
+        console.log('save song');
         this.isSaving = true;
         if (this.song.id !== undefined) {
             this.subscribeToSaveResponse(
@@ -53,13 +57,22 @@ export class SongDialogComponent implements OnInit {
         }
     }
 
+    startSearch() {
+        console.log('startSearch()');
+        if (this.search === '') {
+            //un truc?
+        } else {
+            this.deezerService.search(this.search);
+        }
+    }
+
     private subscribeToSaveResponse(result: Observable<Song>) {
         result.subscribe((res: Song) =>
             this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
     }
 
     private onSaveSuccess(result: Song) {
-        this.eventManager.broadcast({ name: 'songListModification', content: 'OK'});
+        this.eventManager.broadcast({ name: 'songListModification', content: 'OK' });
         this.isSaving = false;
         this.activeModal.dismiss(result);
     }
@@ -94,11 +107,11 @@ export class SongPopupComponent implements OnInit, OnDestroy {
     constructor(
         private route: ActivatedRoute,
         private songPopupService: SongPopupService
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
-            if ( params['id'] ) {
+            if (params['id']) {
                 this.songPopupService
                     .open(SongDialogComponent as Component, params['id']);
             } else {

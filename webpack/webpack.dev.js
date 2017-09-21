@@ -22,10 +22,18 @@ module.exports = webpackMerge(commonConfig({ env: ENV }), {
                 '/swagger-resources',
                 '/v2/api-docs',
                 '/h2-console'
+                //'search'
             ],
             target: 'http://127.0.0.1:8080',
             secure: false
-        }]
+        },
+        {
+            context: '/search',
+            target: 'https://api.deezer.com/',
+            secure: false,
+            changeOrigin: true
+        }
+        ]
     },
     entry: {
         polyfills: './src/main/webapp/app/polyfills',
@@ -79,8 +87,8 @@ module.exports = webpackMerge(commonConfig({ env: ENV }), {
                 target: 'http://localhost:9060'
             }
         }, {
-            reload: false
-        }),
+                reload: false
+            }),
         new webpack.NoEmitOnErrorsPlugin(),
         new webpack.NamedModulesPlugin(),
         new writeFilePlugin(),
