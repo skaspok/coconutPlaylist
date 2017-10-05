@@ -1,0 +1,32 @@
+<div>
+    <div class="form-group">
+        <input type="text" class="form-control" name="deezerSearch" [(ngModel)]="search" id="field_deezerRef" />
+        <button type="button" (click)="startSearch()" class="btn btn-secondary">
+            <span class="fa fa-search"></span>&nbsp;<span>Search</span>
+        </button>
+    </div>
+    <h2>
+        Results:
+    </h2>
+    <div class="table-responsive" *ngIf="deezerSongs">
+        <tbody>
+            <tr *ngFor="let deezerSong of deezerSongs">
+                <td>
+                    {{deezerSong.title}}
+                </td>
+                <td>{{deezerSong.album.title}}</td>
+                <td>
+                    {{deezerSong.artist.name}}
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <!-- <button type="submit" [routerLink]="['../song', song.id ]" class="btn btn-info btn-sm">
+                            <span class="fa fa-star-o"></span>
+                            <span class="hidden-md-down">Add</span>
+                        </button> -->
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </div>
+</div>

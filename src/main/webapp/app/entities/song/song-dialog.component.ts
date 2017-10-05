@@ -11,7 +11,8 @@ import { SongPopupService } from './song-popup.service';
 import { SongService } from './song.service';
 import { User, UserService } from '../../shared';
 import { ResponseWrapper } from '../../shared';
-import { DeezerService } from '../../shared/deezer.service';
+import { DeezerService } from '../deezerSong/deezer.service';
+import { DeezerSong } from '../deezerSong/deezerSong.model';
 
 @Component({
     selector: 'jhi-song-dialog',
@@ -62,7 +63,15 @@ export class SongDialogComponent implements OnInit {
         if (this.search === '') {
             //un truc?
         } else {
-            this.deezerService.search(this.search);
+            this.deezerService.search(this.search).subscribe(
+                (res: ResponseWrapper) => {
+                    //console.dir(res.json);
+                    let deezerSong: DeezerSong[];
+                    deezerSong = res.json.data;
+                    // console.dir(deezerSong[0]);
+                },
+                (res: ResponseWrapper) => this.onError(res.json)
+            );
         }
     }
 

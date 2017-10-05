@@ -17,7 +17,8 @@ import {
     songRoute,
     songPopupRoute,
 } from './';
-import { DeezerService } from '../../shared/deezer.service';
+import { DeezerService } from '../deezerSong/deezer.service';
+import { DeezerSongComponent } from '../deezerSong/deezerSong.component';
 
 const ENTITY_STATES = [
     ...songRoute,
@@ -39,6 +40,7 @@ const ENTITY_STATES = [
         SongDeleteDialogComponent,
         SongPopupComponent,
         SongDeletePopupComponent,
+        DeezerSongComponent
     ],
     entryComponents: [
         SongComponent,
@@ -48,6 +50,7 @@ const ENTITY_STATES = [
         SongPopupComponent,
         SongDeleteDialogComponent,
         SongDeletePopupComponent,
+        DeezerSongComponent
     ],
     providers: [
         SongService,
