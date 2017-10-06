@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { DeezerSong } from "./deezerSong.model";
 import { ResponseWrapper } from "../../shared/index";
 import { DeezerService } from "./deezer.service";
 import { JhiAlertService } from "ng-jhipster";
+import { Song } from "../song/song.model";
 
 @Component({
     selector: 'jhi-deezer-song',
@@ -12,6 +13,9 @@ export class DeezerSongComponent {
 
     deezerSongs: DeezerSong[];
     search: string;
+
+    @Input()
+    song: Song;
 
     constructor(
         private deezerService: DeezerService,
@@ -35,5 +39,13 @@ export class DeezerSongComponent {
 
     private onError(error) {
         this.alertService.error(error.message, null, null);
+    }
+
+    addSong(input: DeezerSong) {
+        console.log('add deezer song :' + input.id);
+        console.dir(input);
+        this.song.deezerRef = input.id;
+        this.deezerSongs = new Array<DeezerSong>();
+
     }
 }

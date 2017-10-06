@@ -2,7 +2,8 @@
     <div class="form-group">
         <input type="text" class="form-control" name="deezerSearch" [(ngModel)]="search" id="field_deezerRef" />
         <button type="button" (click)="startSearch()" class="btn btn-secondary">
-            <span class="fa fa-search"></span>&nbsp;<span>Search</span>
+            <span class="fa fa-search"></span>&nbsp;
+            <span>Search</span>
         </button>
     </div>
     <h2>
@@ -20,10 +21,10 @@
                 </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
-                        <!-- <button type="submit" [routerLink]="['../song', song.id ]" class="btn btn-info btn-sm">
+                        <button type="submit" (click)="addSong(deezerSong)" class="btn btn-info btn-sm">
                             <span class="fa fa-star-o"></span>
                             <span class="hidden-md-down">Add</span>
-                        </button> -->
+                        </button>
                     </div>
                 </td>
             </tr>
