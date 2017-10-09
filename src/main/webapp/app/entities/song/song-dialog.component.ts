@@ -32,7 +32,6 @@ export class SongDialogComponent implements OnInit {
         private songService: SongService,
         private userService: UserService,
         private eventManager: JhiEventManager,
-        private deezerService: DeezerService
     ) {
     }
 
@@ -57,24 +56,7 @@ export class SongDialogComponent implements OnInit {
                 this.songService.create(this.song));
         }
     }
-
-    startSearch() {
-        console.log('startSearch()');
-        if (this.search === '') {
-            //un truc?
-        } else {
-            this.deezerService.search(this.search).subscribe(
-                (res: ResponseWrapper) => {
-                    //console.dir(res.json);
-                    let deezerSong: DeezerSong[];
-                    deezerSong = res.json.data;
-                    // console.dir(deezerSong[0]);
-                },
-                (res: ResponseWrapper) => this.onError(res.json)
-            );
-        }
-    }
-
+   
     private subscribeToSaveResponse(result: Observable<Song>) {
         result.subscribe((res: Song) =>
             this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));

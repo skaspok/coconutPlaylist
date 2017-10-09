@@ -7,8 +7,7 @@ export class DeezerSong {
         public title?: string,
         public album?: DeezerAlbum,
         public artist?: DeezerArtist,
-        public id?: string,
-
+        public id?: string
     ) {
     }
 }

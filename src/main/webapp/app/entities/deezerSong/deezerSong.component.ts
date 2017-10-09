@@ -46,6 +46,5 @@ export class DeezerSongComponent {
         console.dir(input);
         this.song.deezerRef = input.id;
         this.deezerSongs = new Array<DeezerSong>();
-
     }
 }
