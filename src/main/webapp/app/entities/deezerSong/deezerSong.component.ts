@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { DeezerSong } from "./deezerSong.model";
-import { ResponseWrapper } from "../../shared/index";
-import { DeezerService } from "./deezer.service";
-import { JhiAlertService } from "ng-jhipster";
-import { Song } from "../song/song.model";
+import { Component, OnInit, Input } from '@angular/core';
+import { DeezerSong } from './deezerSong.model';
+import { ResponseWrapper } from '../../shared/index';
+import { DeezerService } from './deezer.service';
+import { JhiAlertService } from 'ng-jhipster';
+import { Song } from '../song/song.model';
+import { SanitizeService } from './../../shared/utils/deezer.sanitize.service';
 
 @Component({
     selector: 'jhi-deezer-song',
@@ -20,17 +21,20 @@ export class DeezerSongComponent {
     constructor(
         private deezerService: DeezerService,
         private alertService: JhiAlertService,
+        private sanitizer: SanitizeService
     ) {
     }
 
     startSearch() {
-        console.log('startSearch()');
         if (this.search === '') {
             // un truc?
         } else {
             this.deezerService.search(this.search).subscribe(
                 (res: ResponseWrapper) => {
                     this.deezerSongs = res.json.data;
+                    for (let i = 0; i < this.deezerSongs.length; i++) {
+                        this.sanitizer.sanitizeSong(this.deezerSongs[i]);
+                    }
                 },
                 (res: ResponseWrapper) => this.onError(res.json)
             );
@@ -42,8 +46,6 @@ export class DeezerSongComponent {
     }
 
     addSong(input: DeezerSong) {
-        console.log('add deezer song :' + input.id);
-        console.dir(input);
         this.song.deezerRef = input.id;
         this.deezerSongs = new Array<DeezerSong>();
     }

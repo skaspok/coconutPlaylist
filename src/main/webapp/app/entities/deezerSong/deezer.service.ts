@@ -9,7 +9,6 @@ export class DeezerService {
     constructor(private http: Http) { }
 
     search(req: string): Observable<ResponseWrapper> {
-        console.log('deezer service search( : ' + req);
         const uri = 'search?q=' + req;
 
         return this.http.get(uri)
@@ -18,9 +17,7 @@ export class DeezerService {
     }
 
     private convertResponse(res: Response): ResponseWrapper {
-        console.log('convertResponse()');
         const jsonResponse = res.json();
-        console.dir(jsonResponse);
         return new ResponseWrapper(res.headers, jsonResponse, res.status);
     }
 

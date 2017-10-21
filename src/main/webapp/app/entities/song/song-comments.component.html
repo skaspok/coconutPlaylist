@@ -1,8 +1,11 @@
-<div *ngIf="song">
-    <table>
-        <tr *ngFor="let comment of song.comments">
-            <li>{{comment.user.login}} : {{comment.text}}</li>
-        </tr>
-        <jhi-add-comment [song]="song"></jhi-add-comment>
-    </table>
+<div *ngIf="song" class="table-responsive">
+    <div class="gradient-transparent">
+        <table>
+            <tr *ngFor="let comment of song.comments">
+                <li>{{comment.user.login}} : {{comment.text}}</li>
+            </tr>
+        </table>
+    </div>
+    <div class="test-absolute"></div>
+    <jhi-add-comment [song]="song"></jhi-add-comment>
 </div>

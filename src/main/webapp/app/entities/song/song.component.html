@@ -3,8 +3,8 @@
         <span>Songs</span>
         <button class="btn btn-primary float-right jh-create-entity create-song" [routerLink]="['/', { outlets: { popup: ['song-new'] } }]">
             <span class="fa fa-plus"></span>
-            <span >
-            Create new Song
+            <span>
+                Create new Song
             </span>
         </button>
     </h2>
@@ -16,11 +16,18 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th><span>Deezer</span></th>
-                    <th><span>Date</span></th>
-                    <th><span>Adding User</span></th>
-                    <th><span>Comments</span></th>
-                    <!-- <th></th> -->
+                    <th>
+                        <span>Deezer</span>
+                    </th>
+                    <th>
+                        <span>Date</span>
+                    </th>
+                    <th>
+                        <span>Adding User</span>
+                    </th>
+                    <th>
+                        <span>Comments</span>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -28,16 +35,16 @@
                     <td>
                         <iframe [src]="song.sanitizedUrl" scrolling="no" frameborder="0" allowTransparency="true" width="80" height="80"></iframe>
                     </td>
-                    <td>{{song.date | date:'medium'}}</td>
+                    <td>{{song.date | date:'dd/mm/yyyy'}}</td>
                     <td>
                         {{song.addingUser?.login}}
                     </td>
                     <td>
                         <jhi-song-comments [song]="song"></jhi-song-comments>
                     </td>
-                    <td class="text-right">
+                    <!-- <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
-                            <!-- <button type="submit" [routerLink]="['../song', song.id ]" class="btn btn-info btn-sm">
+                         <button type="submit" [routerLink]="['../song', song.id ]" class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
                             <span class="hidden-md-down">View</span>
                         </button>
@@ -48,9 +55,9 @@
                             <button type="submit" [routerLink]="['/', { outlets: { popup: 'song/'+ song.id + '/delete'} }]" replaceUrl="true" class="btn btn-danger btn-sm">
                             <span class="fa fa-remove"></span>
                             <span class="hidden-md-down">Delete</span>
-                        </button> -->
+                        </button>
                         </div>
-                    </td>
+                    </td> -->
                 </tr>
             </tbody>
         </table>

@@ -46,7 +46,6 @@ export class SongDialogComponent implements OnInit {
     }
 
     save() {
-        console.log('save song');
         this.isSaving = true;
         if (this.song.id !== undefined) {
             this.subscribeToSaveResponse(
@@ -56,7 +55,7 @@ export class SongDialogComponent implements OnInit {
                 this.songService.create(this.song));
         }
     }
-   
+
     private subscribeToSaveResponse(result: Observable<Song>) {
         result.subscribe((res: Song) =>
             this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));

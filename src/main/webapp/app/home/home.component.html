@@ -24,13 +24,14 @@
                 <a class="alert-link" routerLink="register">Register a new account</a>
             </div>
 
-            <iframe scrolling="no" frameborder="0" allowTransparency="true" src="https://www.deezer.com/plugins/player?format=classic&autoplay=false&playlist=true&width=700&height=400&color=007FEB&layout=dark&size=medium&type=playlist&id=2220483942&app_id=1"
-                width="700" height="400"></iframe>
+            <div *ngSwitchCase="true">
+                <iframe scrolling="no" frameborder="0" allowTransparency="true" src="https://www.deezer.com/plugins/player?format=classic&autoplay=false&playlist=true&width=700&height=400&color=007FEB&layout=dark&size=medium&type=playlist&id=2220483942&app_id=1"
+                    width="700" height="400"></iframe>
 
-            <a class="nav-link" routerLink="song" (click)="collapseNavbar()">
-
-                <span>Editer, commenter la pLaylist... </span>
-            </a>
+                <a class="nav-link" routerLink="song" (click)="collapseNavbar()">
+                    <span>Editer, commenter la pLaylist... </span>
+                </a>
+            </div>
         </div>
 
         <!--<p>

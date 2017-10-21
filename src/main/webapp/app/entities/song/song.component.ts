@@ -8,14 +8,13 @@ import { SongService } from './song.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { SanitizeService } from './../../shared/utils/deezer.sanitize.service';
 
 @Component({
     selector: 'jhi-song',
     templateUrl: './song.component.html'
 })
 export class SongComponent implements OnInit, OnDestroy {
-    static DEEZER_LINK: string = 'http://www.deezer.com/plugins/player?format=square&autoplay=false&playlist=false&width=80&'
-    + 'height=80&color=007FEB&layout=dark&size=small&type=tracks&id=[song.deezerRef]&app_id=1';
 
     songs: Song[];
     currentAccount: any;
@@ -26,7 +25,7 @@ export class SongComponent implements OnInit, OnDestroy {
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private principal: Principal,
-        private sanitizer: DomSanitizer
+        private sanitizer: SanitizeService,
     ) {
     }
 
@@ -35,7 +34,7 @@ export class SongComponent implements OnInit, OnDestroy {
             (res: ResponseWrapper) => {
                 this.songs = res.json;
                 for (let i = 0; i < this.songs.length; i++) {
-                    this.sanitizeSong(this.songs[i]);
+                    this.sanitizer.sanitizeSong(this.songs[i]);
                 }
             },
             (res: ResponseWrapper) => this.onError(res.json)
@@ -63,9 +62,5 @@ export class SongComponent implements OnInit, OnDestroy {
 
     private onError(error) {
         this.alertService.error(error.message, null, null);
-    }
-    private sanitizeSong(song: Song) {
-        const url = SongComponent.DEEZER_LINK.replace('[song.deezerRef]', song.deezerRef);
-        song.sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
     }
 }
