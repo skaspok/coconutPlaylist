@@ -33,6 +33,7 @@ export class DeezerSongComponent {
                 (res: ResponseWrapper) => {
                     this.deezerSongs = res.json.data;
                     for (let i = 0; i < this.deezerSongs.length; i++) {
+                        this.deezerSongs[i].deezerRef = this.deezerSongs[i].id;
                         this.sanitizer.sanitizeSong(this.deezerSongs[i]);
                     }
                 },
