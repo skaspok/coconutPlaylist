@@ -1,19 +1,14 @@
 entity Song{
-    deezerRef String,
-    date ZonedDateTime
-
+	deezerRef String,
+    date ZonedDateTime,
+    addingUser User
 }
-
-
 entity Comment{
-    text String,
+	text String,
     date ZonedDateTime
-
-
 }
-
 relationship OneToMany{
-  //  Song{addingUser} to User,
- //   Comment{user} to User,
-    Comment{song} to Song
+	Song{addingUser} to User,
+	// Comment{user} to User,
+	Comment{song} to Song
 }

@@ -7,7 +7,7 @@
         Added the constraints for entity Comment.
     -->
     <changeSet id="20170812135342-2" author="jhipster">
-        
+        <validCheckSum>ANY</validCheckSum>
         <addForeignKeyConstraint baseColumnNames="song_id"
                                  baseTableName="comment"
                                  constraintName="fk_comment_song_id"

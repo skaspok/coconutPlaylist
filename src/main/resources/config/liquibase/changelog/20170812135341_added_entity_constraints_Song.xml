@@ -7,6 +7,7 @@
         Added the constraints for entity Song.
     -->
     <changeSet id="20170812135341-2" author="jhipster">
+    <validCheckSum>ANY</validCheckSum>
         
         <addForeignKeyConstraint baseColumnNames="adding_user_id"
                                  baseTableName="song"
