@@ -1,5 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { JsonpModule } from '@angular/http';
 
 import {
     CoconutPlaylistSharedLibsModule,
@@ -19,7 +20,8 @@ import {
 @NgModule({
     imports: [
         CoconutPlaylistSharedLibsModule,
-        CoconutPlaylistSharedCommonModule
+        CoconutPlaylistSharedCommonModule,
+        JsonpModule,
     ],
     declarations: [
         JhiLoginModalComponent,
@@ -46,4 +48,4 @@ import {
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
 })
-export class CoconutPlaylistSharedModule {}
+export class CoconutPlaylistSharedModule { }
