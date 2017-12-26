@@ -1,15 +1,35 @@
 package org.skaspok.coconutplaylist.web.rest;
 
-import org.skaspok.coconutplaylist.CoconutPlaylistApp;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.skaspok.coconutplaylist.web.rest.TestUtil.sameInstant;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.skaspok.coconutplaylist.domain.Comment;
-import org.skaspok.coconutplaylist.repository.CommentRepository;
-import org.skaspok.coconutplaylist.web.rest.errors.ExceptionTranslator;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.skaspok.coconutplaylist.CoconutPlaylistApp;
+import org.skaspok.coconutplaylist.domain.Comment;
+import org.skaspok.coconutplaylist.repository.CommentRepository;
+import org.skaspok.coconutplaylist.repository.SongRepository;
+import org.skaspok.coconutplaylist.service.UserService;
+import org.skaspok.coconutplaylist.web.rest.errors.ExceptionTranslator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
@@ -19,19 +39,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
-import java.time.ZoneId;
-import java.util.List;
-
-import static org.skaspok.coconutplaylist.web.rest.TestUtil.sameInstant;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Test class for the CommentResource REST controller.
@@ -62,6 +69,11 @@ public class CommentResourceIntTest {
 
     @Autowired
     private EntityManager em;
+    
+    @Mock
+    private UserService mockUserService;
+    
+    @Autowired SongRepository songRepository; 
 
     private MockMvc restCommentMockMvc;
 
@@ -70,7 +82,7 @@ public class CommentResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        CommentResource commentResource = new CommentResource(commentRepository);
+        CommentResource commentResource = new CommentResource(commentRepository, mockUserService,  songRepository);
         this.restCommentMockMvc = MockMvcBuilders.standaloneSetup(commentResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

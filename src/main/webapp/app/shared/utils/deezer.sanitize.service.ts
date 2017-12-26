@@ -15,7 +15,7 @@ export class SanitizeService {
 
     sanitizeSong(deezerSong: SanitizableDeezerObject): void {
 
-        if (deezerSong.deezerRef != undefined) {
+        if (deezerSong.deezerRef !== undefined) {
             const url = SanitizeService.DEEZER_LINK.replace('[song.deezerRef]', deezerSong.deezerRef);
             deezerSong.sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         }
